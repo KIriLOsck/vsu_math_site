@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: .
+    volumes:
+      - static:/static
+  gateway:
+    image: openresty/openresty:alpine
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf:ro
+      - static:/usr/share/static:ro
+    depends_on:
+      - backend
+
+volumes:
+  static:
