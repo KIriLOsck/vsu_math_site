@@ -3,3 +3,4 @@ __pycache__
 a
 node_modules
 .vscode
+*.xlsx
