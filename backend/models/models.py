@@ -1,25 +1,18 @@
-from sqlalchemy.ext.asyncio import AsyncAttrs
-from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import Text, Integer, Boolean
-from sqlalchemy.dialects.postgresql import JSONB
-from datetime import datetime
-from sqlalchemy.orm import Mapped, mapped_column
+from pydantic import BaseModel, Field
 
-class Base(AsyncAttrs, DeclarativeBase): ...
+class PairModel(BaseModel):
+    year: int = Field(..., examples=[2])
+    speciality: str = Field(..., examples=["Информационные системмы и приграмирование (на базе 9 классов)"])
+    level: str = Field(..., examples=["СПО"])
+    group: str | None = Field(..., examples=["Группа 01/2"])
+    day: str = Field(..., examples=["Вторник"])
+    time: str = Field(..., examples=["9:45.11:20"])
+    detail: str = Field(..., examples=["Основы алгоритизации и програмирования"])
+    numerator: bool = Field(..., examples=[True])
+    auditory: str = Field(examples=["306"])
+    teacher: str = Field(examples=["Золотарева Е.А."])
+    address: str = Field(examples=[""])
 
-class SheduleBase(Base):
-    __tablename__ = "shedule"
-    
-    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True, autoincrement=True)
-    year: Mapped[int] = mapped_column(Integer, nullable=False)
-    speciality: Mapped[str] = mapped_column(Text, nullable=False)
-    level: Mapped[str] = mapped_column(Text, nullable=False)
-    group: Mapped[str] = mapped_column(Text, nullable=True)
-    day: Mapped[str] = mapped_column(Text, nullable=False)
-    time: Mapped[str] = mapped_column(Text, nullable=False)
-    detail: Mapped[str] = mapped_column(Text, nullable=False)
-    numerator: Mapped[bool] = mapped_column(Boolean, nullable=False)
-    auditory: Mapped[str] = mapped_column(Text, nullable=True)
-    teacher: Mapped[str] = mapped_column(Text, nullable=True)
-    address: Mapped[str] = mapped_column(Text, nullable=True)
-    
+class SheduleModel(BaseModel):
+    shedule: list[PairModel]
+

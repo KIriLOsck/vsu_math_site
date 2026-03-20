@@ -9,12 +9,16 @@ services:
       - "./data:/var/lib/postgresql/data"
     ports:
       - "5432:5432"
+  cache:
+    image: redis:8.6
+    depends_on:
+      - database
   backend:
     build: .
     volumes:
       - static:/static
     depends_on:
-      - database
+      - cache
   gateway:
     image: openresty/openresty:alpine
     ports:

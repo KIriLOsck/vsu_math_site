@@ -5,3 +5,4 @@ sqlalchemy
 pydantic_settings
 asyncpg
 python-multipart
+redis
