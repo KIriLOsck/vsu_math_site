@@ -1,7 +1,8 @@
 from fastapi import FastAPI
+from backend.dependencies import dependencies
 
-app = FastAPI()
-
-@app.get("ping")
-async def pong():
-    return {"message": "Pong!"}
+app = FastAPI(
+    lifespan=dependencies.lifespan,
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
+)

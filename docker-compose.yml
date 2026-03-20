@@ -1,8 +1,20 @@
 services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: ${DB_NAME:-db}
+      POSTGRES_USER: ${DB_USER:-admin}
+      POSTGRES_PASSWORD: ${DB_PASS:-admin}
+    volumes:
+      - "./data:/var/lib/postgresql/data"
+    ports:
+      - "5432:5432"
   backend:
     build: .
     volumes:
       - static:/static
+    depends_on:
+      - database
   gateway:
     image: openresty/openresty:alpine
     ports:

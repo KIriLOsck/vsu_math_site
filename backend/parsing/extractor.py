@@ -1,7 +1,7 @@
 import json, re
 from openpyxl import load_workbook
 
-from utils import clear_spaces
+from backend.parsing.utils import clear_spaces
 
 WEEK_DAYS = {
     "Понедельник",
@@ -115,21 +115,27 @@ def check_time(string: str):
     else: time = None
     return time, string
 
+def build_pair(row, musk, day, time):
+    new_row = []
+    for cell, group in zip(row, musk):
+        if group and (day or time or cell):
+            is_time_in_detail, cell = check_time(cell)
+            time = is_time_in_detail or time
+            new_row.append({"day": day, "time": time, "detail": cell})
+        else: new_row.append(None)
+    return new_row
+
 def parse_shedule(raw_table, code_musk):
     pairs_musk = []
+    last_day = None
     for row in raw_table[4:]:
         time = row[1]
         day = row[0]
-        new_row = []
-        for cell, group in zip(row, code_musk):
-            if group:
-                if day or time or cell:
-                    is_time_in_detail, cell = check_time(cell)
-                    time = is_time_in_detail or time
-                    new_row.append({"day": day, "time": time, "detail": cell})
-                else: new_row.append(None)
-            else: new_row.append(None)
-        pairs_musk.append(new_row)
+        if not day and last_day == "Суббота": return pairs_musk
+        last_day = day
+
+        
+        pairs_musk.append(build_pair(row, code_musk, day, time))
 
     return pairs_musk
 
@@ -195,18 +201,20 @@ def mark_numerator(pairs_musk):
 def split(raw_table, start, end):
     result = []
     for row in raw_table:
+        
         result.append(row[start:end])
     return result
 
 def devive(raw_table):
-    splits = []
+    splits = [0]
 
     for i, e in enumerate(raw_table[3]):
         if e:
-            if 'звонков' in e:
-                splits.append(i - 1)
+            if "недел" in e:
+                splits.append(i)
         else:
             splits.append(i)
+
     buffer = []
     for i in range(len(splits) -1 ):
         start = splits[i]
@@ -215,14 +223,14 @@ def devive(raw_table):
             {
                 "start": start,
                 "end": end,
-                "len": len(raw_table[3][start:end])
+                "len": end - start
             }
         )
-
     result = []
     for e in buffer:
         if e.get("len") > 2:
-            result.append(split(raw_table, e.get("start"), e.get("end")))
+            st, en = e.get("start"), e.get("end")
+            result.append(split(raw_table, st, en))
     return result
 
 
@@ -268,11 +276,13 @@ def extract(filename):
     table = load_table(filename)
     extracted_data = []
     for chunk in devive(table):
-        extracted_data.extend(parse(chunk))
+        if len(chunk[0]) > 2:
+            extracted_data.extend(parse(chunk))
     return extracted_data
 
 if __name__ == "__main__":
     shedule = extract("backend/shedule.xlsx")
+    raw = load_table("backend/shedulespo.xlsx")
 
     with open("out.json", "w") as file:
         print("Writing...")

@@ -4,3 +4,4 @@ a
 node_modules
 .vscode
 *.xlsx
+data

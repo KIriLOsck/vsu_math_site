@@ -1,2 +1,7 @@
 fastapi
 uvicorn
+openpyxl
+sqlalchemy
+pydantic_settings
+asyncpg
+python-multipart
