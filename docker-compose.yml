@@ -17,6 +17,7 @@ services:
     build: .
     volumes:
       - static:/static
+      - ./tmp:/tmp
     depends_on:
       - cache
   gateway:

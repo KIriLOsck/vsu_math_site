@@ -4,5 +4,6 @@ openpyxl
 sqlalchemy
 pydantic_settings
 asyncpg
+aiofiles
 python-multipart
 redis

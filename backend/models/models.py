@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+import uuid
 
 class PairModel(BaseModel):
     year: int = Field(..., examples=[2])
@@ -15,4 +16,7 @@ class PairModel(BaseModel):
 
 class SheduleModel(BaseModel):
     shedule: list[PairModel]
+
+class TaskCreatedResponse(BaseModel):
+    task_id: str = Field(..., examples=[str(uuid.uuid4())])
 

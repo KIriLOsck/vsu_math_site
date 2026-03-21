@@ -96,6 +96,7 @@ async def start_background_workers(executor: ProcessPoolExecutor):
             worker_logger.warning(f"Invalid worker-file format '{workers_path}/{worker_name}'")
     try:
         yield
+        
     finally:
         worker_logger.info("Initiating graceful shutdown...")
         stop_flag.set()
