@@ -55,18 +55,18 @@
     justify-content: center;
 }
 
-body {
+#root {
     font-family: "Jost";
     background-color: var(--bg-color);
     margin: 20px;
 }
 
-header {
-    gap: min(10px, 1vh);
+body {
+    overflow-x: hidden;
 }
 
-hero {
-    padding: 0 3vw;
+header {
+    gap: min(10px, 1vh);
 }
 
 .heroTitle {
@@ -74,7 +74,7 @@ hero {
     padding-left: 3vw;
 }
 
-main, body {
+main, #root {
     gap: min(70px, 7vh);
     align-self: center;
 }
@@ -104,7 +104,7 @@ p {
     flex-flow: wrap row;
 }
 
-.verticalGroup, body, main, header {
+.verticalGroup, #root, main, header {
     display: flex;
     flex-flow: nowrap column;
 }
@@ -126,6 +126,10 @@ p {
 
 .start-end-line {
     justify-content: space-between;
+}
+
+.space-around {
+    justify-content: space-around;
 }
 
 .shadow {
@@ -358,4 +362,32 @@ p {
 
 .department-container-img>div {
     width: fit-content;
+}
+
+.activeImage {
+    width: 100%;
+    height: 344px;
+
+    object-fit: cover;
+
+    display: block;
+
+    border-radius: 10px;
+    margin: 20px;
+
+    stroke: var(--turquoise-500);
+    stroke-width: 15px;
+}
+
+.sliders {
+    width: max-content;
+}
+
+.firstSlider, .secondSlider {
+    width: 113vw;
+}
+
+.secondSlider {
+    width: calc(109vw + 300px);
+    transform: translateX(150px);
 }
