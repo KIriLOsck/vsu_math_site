@@ -2,9 +2,16 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 
 import '@splidejs/splide/dist/css/splide.min.css';
 
+interface graduatesInfo {
+    photo: string;
+    title: string;
+    summary: string;
+    contents: string;
+}
+
 
 export function GraduatesComponent() {
-    const info = [
+    const info : graduatesInfo[] = [
         {
             photo: "https://ic.pics.livejournal.com/ehrlichperson/19940988/131971/131971_600.jpg",
             title: "Ежик полевой",
@@ -18,7 +25,7 @@ export function GraduatesComponent() {
             contents: "Куратор подаванов 2 группы и юродивых 3 группы"
         },
         {
-            photo: "",
+            photo: "https://i.ibb.co/tMvN7hb3/DSC01443.jpg",
             title: "Еж лесной",
             summary: "Backend DRY DSR DNS developer",
             contents: ""
