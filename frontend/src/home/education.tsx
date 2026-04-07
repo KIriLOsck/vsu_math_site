@@ -27,7 +27,7 @@
                 </div>
                 <div>
                     <div className="flex-center">
-                        <img src="" alt="" className="direction-img shadow"/>
+                        <img src="https://icdn.lenta.ru/images/2019/09/17/12/20190917123116359/square_320_09eaf4a0a39054ccf5f8cbfc496ee527.jpg" alt="" className="direction-img shadow"/>
                         <div className="direction-bg-img shadow"></div>
                     </div>
                 </div>
