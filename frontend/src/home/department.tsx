@@ -70,11 +70,13 @@ export function DepartmentComponent() {
                     departments.map((department, index) => (
                         <div key={index} className={`horizontalGroup horizontalGroup-gap shadow flex-center start-end-line ${[0, 2, 3].includes((index + 1) % 6) == Boolean(activeDepartment) ? "department-container-turquoise" : "department-container-muted"} ${Math.round((index + 1) / 2) == 2 ? "department-container-img" : ""}`} style={{ backgroundImage: Math.round((index + 1) / 2) == 2 && [0, 2, 3].includes((index + 1) % 6) != Boolean(activeDepartment) ? `url(${department.photo})` : ""}}>
                             <div className="verticalGroup verticalGroup-gap start-end-line">
-                                <p className={`bigText ${[0, 2, 3].includes((index + 1) % 6) == Boolean(activeDepartment) ? "bigText-secondary" : "bigText-turquoise"} department-name`}>{department.title.split("  ").join("\n")}</p>
+                                <p className={`bigText bigText-department ${[0, 2, 3].includes((index + 1) % 6) == Boolean(activeDepartment) ? "bigText-secondary" : "bigText-turquoise"} department-name`}>{department.title.split("  ").join("\n")}</p>
                                 <div className="verticalGroup verticalGroup-gap">
                                     {
                                         department.content.map((el) => (
-                                            <p className="mediumText">{el}</p>
+                                            <>
+                                                <p className="mediumText">{el}</p>
+                                            </>
                                         ))
                                     }
                                 </div>
